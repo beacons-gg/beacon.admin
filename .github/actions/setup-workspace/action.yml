@@ -1,0 +1,43 @@
+# The one home for "stand up the workspace on a runner": pnpm (version from
+# package.json > packageManager), node (version from .nvmrc, pnpm store cached), the registry
+# login, and a frozen install.
+#
+# The Beacon packages (@beaconsgg/*) install from the public npm registry; the repository installs
+# no game plugin. An install needs no token, so an empty token skips the login.
+# The token goes in the runner's user config, never the committed .npmrc (pnpm drops that whole
+# file when a ${VAR} in it is unset; see its comment).
+#
+# Checkout stays outside: fetch-depth varies by caller.
+name: Setup workspace
+description: pnpm + node + registry login + frozen install
+
+inputs:
+  npm-token:
+    description: >-
+      The NPM_TOKEN repository secret, for a job that publishes to npm. A composite action cannot
+      read secrets, so such a caller passes it. An install reads public npm and needs no token.
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@v6
+
+    - uses: actions/setup-node@v7
+      with:
+        node-version-file: .nvmrc
+        cache: pnpm
+
+    - name: Log in to npm
+      run: |
+        if [ -z "$NPM_TOKEN" ]; then
+          echo "no npm token: installing from public npm without a login"
+          exit 0
+        fi
+        printf '//registry.npmjs.org/:_authToken=%s\n' "$NPM_TOKEN" >> ~/.npmrc
+      env:
+        NPM_TOKEN: ${{ inputs.npm-token }}
+      shell: bash
+
+    - run: pnpm install --frozen-lockfile
+      shell: bash

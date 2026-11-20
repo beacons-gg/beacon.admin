@@ -1,0 +1,23 @@
+# The build context stays small and reproducible: the image runs its own frozen install and its own
+# build, so nothing installed or built on this machine goes in.
+**/node_modules
+.pnpm-store
+**/dist
+**/.next
+**/*.tsbuildinfo
+**/.turbo
+coverage
+
+# VCS, CI, editors
+.git
+.github
+.vscode
+.idea
+
+# Env and secrets never go in a layer; the registry token, when the registry needs one, arrives as a
+# BuildKit secret.
+.env
+.env.*
+**/*.key
+**/*.log
+.DS_Store

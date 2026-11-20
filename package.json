@@ -1,0 +1,50 @@
+{
+  "name": "beacon-admin",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The Beacon operator console (apps/admin, Next.js) and @beaconsgg/admin-plugin, the contract a game's operator screens are written against. Takes the published @beaconsgg/* packages and presets from the npm registry.",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "beacon": {
+    "foreign": {
+      "games": [
+        "@*/beacon-admin-plugin"
+      ]
+    },
+    "internalRefs": {
+      "publicOrg": "beacons-gg",
+      "publishedDocs": [
+        "beacon.core/doc/core-compatibility.md",
+        "beacon.server/doc/spec/admin-api.md",
+        "beacon.server/doc/spec/places.md",
+        "beacon.server/doc/spec/place-proposals.md",
+        "beacon.server/doc/spec/runtime-settings.md"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:coverage": "turbo run test:coverage",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check:refs": "beacon-check-internal-refs --strict --allow org-names",
+    "check:copy": "beacon-check-copy --strict '**/*.md'",
+    "gate": "pnpm exec beacon-check-coverage-tasks && pnpm exec beacon-check-tier-gate && pnpm run check:refs && pnpm run check:copy && node scripts/check-public-api.mjs && node scripts/check-contract-copies.mjs && turbo run build typecheck && turbo run test:coverage && pnpm run lint && pnpm run format:check"
+  },
+  "devDependencies": {
+    "@beaconsgg/eslint-config": "^1.1.0",
+    "@beaconsgg/prettier-config": "^1.1.0",
+    "@beaconsgg/vitest-config": "^1.1.0",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@beaconsgg/prettier-config"
+}

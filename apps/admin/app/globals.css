@@ -1,0 +1,207 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Tailwind scans this app's files only, and never node_modules, so a game plugin's built classes are
+   named here or its screens render unstyled. A game's plugin is its `@<game>/beacon-admin-plugin`
+   package (the lint holds the name), which a deployment installs, so one glob covers every plugin
+   plugins.ts lists, and with none it matches nothing and the build goes on. The path is where pnpm
+   puts a package this app installs; `app/__tests__/pluginStyles.test.ts` checks that it resolves
+   for each listed plugin. */
+@source "../node_modules/@*/beacon-admin-plugin/dist";
+
+/* One mode, dark: the html element always carries `dark`, so
+   the components' own `dark:` variants are the ones that apply. */
+@custom-variant dark (&:is(.dark *));
+
+/* ================================================================
+   The console's palette, carried in shadcn's names. Near-black
+   panels on hairline lines; white ink for the primary action; color
+   only where it means something. Gold is the mark's lamp and cursor
+   and the thing under way; status colors mean status; the map's
+   kind colors are data, and stay on the map.
+   ================================================================ */
+
+:root {
+  --radius: 0.5rem;
+
+  /* The content panel; the sidebar sits on the page colour behind it. */
+  --background: #0e0e11;
+  --foreground: #ececef;
+  --card: #131316;
+  --card-foreground: #ececef;
+  --popover: #131316;
+  --popover-foreground: #ececef;
+
+  /* White ink: the button a screen is for. */
+  --primary: #ececef;
+  --primary-foreground: #0b0b0d;
+  --secondary: #1a1a1f;
+  --secondary-foreground: #ececef;
+  --muted: #16161a;
+  --muted-foreground: #9b9ba3;
+  --accent: #1a1a1f;
+  --accent-foreground: #ececef;
+  --destructive: #f2554f;
+  --destructive-foreground: #0b0b0d;
+
+  --border: #212126;
+  /* A control's edge at 3:1 against its own fill, the contrast WCAG asks of a boundary. */
+  --input: #64646d;
+  --ring: #9b9ba3;
+
+  --chart-1: #f5b942;
+  --chart-2: #5aa9f0;
+  --chart-3: #3fcf73;
+  --chart-4: #a78bfa;
+  --chart-5: #fb923c;
+
+  --sidebar: #08080a;
+  --sidebar-foreground: #9b9ba3;
+  --sidebar-primary: #ececef;
+  --sidebar-primary-foreground: #0b0b0d;
+  --sidebar-accent: #1a1a1f;
+  --sidebar-accent-foreground: #ececef;
+  --sidebar-border: #212126;
+  --sidebar-ring: #9b9ba3;
+
+  /* The console's own names beyond shadcn's, for its blocks, tags and labels. */
+  --page: #08080a;
+  --line-2: #2d2d33;
+  --cell: #1b1b20;
+  /* The quiet third ink: 4.6:1 on a card, so a label in it still reads. */
+  --ink-3: #7e7e87;
+  --gold: #f5b942;
+
+  /* Map data (cool), and status: never decoration. */
+  --kind-place: #38bdf8;
+  --status-ok: #3fcf73;
+  /* A switch or setting that is on. Not a status: on is not "ok". The same green today. */
+  --control-on: var(--status-ok);
+  --status-warn: #fb923c;
+  --status-crit: #f2554f;
+  --status-info: #5aa9f0;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-kind-place: var(--kind-place);
+  --color-status-ok: var(--status-ok);
+  --color-control-on: var(--control-on);
+  --color-status-warn: var(--status-warn);
+  --color-status-crit: var(--status-crit);
+  --color-status-info: var(--status-info);
+
+  --color-page: var(--page);
+  --color-line-2: var(--line-2);
+  --color-cell: var(--cell);
+  --color-ink-3: var(--ink-3);
+  --color-gold: var(--gold);
+
+  /* The dense scale: body text 13px, so `text-sm` is the body size and `text-base` a step up. */
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.45;
+  --text-base: 0.875rem;
+  --text-base--line-height: 1.45;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  /* 13px text, dense; on the body, so rem sizes keep their usual meaning. */
+  body {
+    @apply bg-page text-foreground text-[13px] leading-[1.45] antialiased;
+    font-family: var(--font-sans);
+    font-feature-settings: "tnum";
+  }
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: var(--foreground);
+  }
+  ::selection {
+    @apply bg-gold text-primary-foreground;
+  }
+  /* Machine data (DIDs, coords, geohash cells, counts) reads as one system. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* The mark's cursor, and anything under way: a terminal's hard blink, off for less motion. */
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+/* A few blinks and then still (WCAG 2.2.2: nothing blinks past five seconds). */
+.blink {
+  animation: blink 1.1s steps(1) 4;
+}
+@media (prefers-reduced-motion: reduce) {
+  .blink {
+    animation: none;
+  }
+}
+
+/* The map's controls, restyled to sit on the dark page. */
+.maplibregl-ctrl-group {
+  @apply border! border-line-2! bg-secondary!;
+}
+.maplibregl-ctrl-group button + button {
+  @apply border-line-2!;
+}
+.maplibregl-ctrl-icon {
+  filter: invert(1);
+}
+.maplibregl-ctrl-attrib {
+  @apply bg-page/70! text-ink-3!;
+}
+.maplibregl-ctrl-attrib a {
+  @apply text-muted-foreground!;
+}
+.maplibregl-ctrl-attrib-button {
+  filter: invert(1);
+}

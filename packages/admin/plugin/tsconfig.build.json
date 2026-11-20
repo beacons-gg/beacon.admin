@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  // The build compiles under Node's own resolution, which the tests and the editor do not: every
+  // consumer in this repo is a bundler, so an extensionless relative import builds, typechecks and
+  // passes everywhere here and then fails in Node as an installed copy.
+  "compilerOptions": { "module": "NodeNext", "moduleResolution": "NodeNext" },
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/__tests__/**"]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "//": "The presets (@beaconsgg/tsconfig, @beaconsgg/vitest-config) are registry packages here, so a changed compiler flag or coverage floor arrives as a lockfile change, which is in every task's default inputs. apps/admin/turbo.json extends this with Next's outputs. agentGuidance off: turbo would otherwise write an AGENTS.md at the root on every run from an AI agent, which is not a file of this repo.",
+  "agentGuidance": false,
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^build"]
+    },
+    "test": {
+      "dependsOn": ["^build"]
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"]
+    }
+  }
+}

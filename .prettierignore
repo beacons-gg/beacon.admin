@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.next/
+.turbo/
+coverage/
+pnpm-lock.yaml
+
+# The plugin contract's README is hand-authored prose; Prettier does not reflow it.
+packages/*/*/README.md
