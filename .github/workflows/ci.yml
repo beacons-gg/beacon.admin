@@ -63,18 +63,12 @@ jobs:
 
       - uses: docker/setup-buildx-action@v4
 
-      # The Dockerfiles mount an npm user config as a build secret. Public npm needs no token, so
-      # the file is empty.
-      - name: An empty npm config for the build secret
-        run: touch "$RUNNER_TEMP/npmrc"
-
       - name: Build beacon-admin
         uses: docker/build-push-action@v7
         with:
           context: .
           push: false
           tags: beacon-admin:ci
-          secret-files: npmrc=${{ runner.temp }}/npmrc
           # Same cache scope as the release push, so a release replays the layers the last PR or
           # main build already proved.
           cache-from: type=gha,scope=beacon-admin

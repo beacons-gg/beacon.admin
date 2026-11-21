@@ -142,15 +142,19 @@ CI checks the repository in that state.
 names, and each name can carry a version range:
 
 ```bash
-docker build --secret id=npmrc,src=$HOME/.npmrc \
-  --build-arg CONSOLE_PLUGINS="@example/beacon-admin-plugin@^1.2.0" -t beacon-admin .
+docker build --build-arg CONSOLE_PLUGINS="@example/beacon-admin-plugin@^1.2.0" -t beacon-admin .
 CONSOLE_PLUGINS="@example/beacon-admin-plugin" docker compose up --build
 ```
 
-The repository's `.npmrc` maps only Beacon's scopes. A plugin under any other scope installs
-from wherever the npm user config says, so the file passed as the `npmrc` secret carries the scope's
-registry beside the token: `@example:registry=https://registry.example.com/`. With no such line the
-scope is asked of npmjs.
+A plugin on the public npm registry needs no npm config. A plugin from another registry does. Map
+the plugin's scope to its registry beside the token in an npm user config, such as
+`@example:registry=https://registry.example.com/`. Pass that file to the build as the `npmrc`
+secret, which never lands in a layer:
+
+```bash
+docker build --secret id=npmrc,src=$HOME/.npmrc \
+  --build-arg CONSOLE_PLUGINS="@example/beacon-admin-plugin@^1.2.0" -t beacon-admin .
+```
 
 The Release workflow builds its image with an empty `CONSOLE_PLUGINS`, so the released image
 carries no game plugin. To run a console with plugins, build your own image as above.
