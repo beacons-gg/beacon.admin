@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/select";
 import { Did, ToneBadge } from "@/components/primitives";
 import { describeApiError } from "@/lib/api";
-import { formatBytes } from "@/lib/format";
+import { avatarEmoji, formatBytes } from "@/lib/format";
 import {
   ActiveServerLine,
   GateNotice,
@@ -341,12 +341,13 @@ export function OwnerLabel({
   detailed?: boolean;
 }) {
   const { data } = useProfile(origin, did);
+  const emoji = avatarEmoji(data?.avatar);
   if (detailed)
     return (
       <div className="flex min-w-0 items-center gap-2">
-        {data?.avatar ? (
+        {emoji ? (
           <span aria-hidden className="text-xl">
-            {data.avatar}
+            {emoji}
           </span>
         ) : null}
         <div className="min-w-0">
@@ -363,7 +364,7 @@ export function OwnerLabel({
   if (data?.displayName)
     return (
       <span className="inline-flex items-center gap-1 truncate text-xs" title={did}>
-        {data.avatar ? <span aria-hidden>{data.avatar}</span> : null}
+        {emoji ? <span aria-hidden>{emoji}</span> : null}
         <span className="truncate">{data.displayName}</span>
       </span>
     );

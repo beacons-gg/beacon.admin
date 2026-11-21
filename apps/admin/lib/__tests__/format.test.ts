@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatRunDuration } from "../format";
+import { avatarEmoji, formatRunDuration } from "../format";
 
 describe("formatRunDuration", () => {
   const startedAt = "2026-11-08T10:00:01.000Z";
@@ -14,5 +14,18 @@ describe("formatRunDuration", () => {
     expect(
       formatRunDuration({ startedAt, finishedAt: "2026-11-08T09:00:00.000Z" }),
     ).toBeUndefined();
+  });
+});
+
+describe("avatarEmoji", () => {
+  it("takes the emoji out of an emoji avatar", () => {
+    expect(avatarEmoji("emoji:🦊")).toBe("🦊");
+  });
+
+  it("draws nothing for an image avatar, an unknown scheme or no avatar", () => {
+    expect(avatarEmoji("image:abc123@beacon.example")).toBe("");
+    expect(avatarEmoji("🦊")).toBe("");
+    expect(avatarEmoji("")).toBe("");
+    expect(avatarEmoji(undefined)).toBe("");
   });
 });

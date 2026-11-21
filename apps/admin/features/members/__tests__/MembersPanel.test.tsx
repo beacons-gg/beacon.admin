@@ -40,7 +40,7 @@ vi.mock("@/features/wallet", () => ({
   useWallet: () => ({ status: "unlocked", wallet: WALLET }),
 }));
 vi.mock("@/features/media/useProfile", () => ({
-  useProfile: () => ({ data: { displayName: "Ana", avatar: "🦊", handles: ["@ana"] } }),
+  useProfile: () => ({ data: { displayName: "Ana", avatar: "emoji:🦊", handles: ["@ana"] } }),
 }));
 
 const { MembersPanel } = await import("../MembersPanel");
@@ -88,6 +88,9 @@ describe("MembersPanel", () => {
     renderPanel();
     expect(await screen.findByText("Ana")).toBeTruthy();
     expect(screen.getByText("@ana")).toBeTruthy();
+    // The avatar is drawn as its emoji, without the scheme it is published with.
+    expect(screen.getByText("🦊")).toBeTruthy();
+    expect(screen.queryByText(/emoji:/)).toBeNull();
     expect(screen.getByText("it's Ana from the park")).toBeTruthy();
 
     api.add.mockResolvedValue({ did: ANA, status: "member" });
