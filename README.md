@@ -1,5 +1,10 @@
 # Beacon operator console
 
+Beacon is a network of servers for games played at real places. The console runs at
+[console.beacons.gg](https://console.beacons.gg), and [the console docs](https://beacons.gg/docs/operator-console)
+walk through each screen. [Beacon Hosting](https://beacons.gg/hosting) runs a server for you, and
+[beacons.gg/docs](https://beacons.gg/docs) covers the rest of Beacon.
+
 The web console an operator runs Beacon servers from, and the contract a game's operator screens
 plug into it with. Two packages:
 
