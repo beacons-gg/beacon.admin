@@ -75,10 +75,11 @@ The released console image contains no game plugins. To build a console with plu
 
 ```sh
 docker build \
-  --secret id=npmrc,src=$HOME/.npmrc \
   --build-arg CONSOLE_PLUGINS="@example/beacon-admin-plugin@^1.2.0" \
   -t beacon-admin .
 ```
+
+A plugin on the public npm registry needs no npm configuration. A plugin from a private registry also needs an npm config with that registry and its token, passed as a build secret (`--secret id=npmrc,src=$HOME/.npmrc`).
 
 See [Game plugins](apps/admin/README.md#game-plugins) for package naming, registry configuration, and build details.
 
