@@ -105,11 +105,13 @@ Merging to `main` validates and ships nothing. A release is one run of
 gh workflow run release.yml -f version=1.0.1
 ```
 
-The run sets that version on `@beaconsgg/admin-plugin` and runs the whole gate. Next the run pushes
-the commit `Release <version>` to `main`. The run then builds and publishes the package if the
-registry lacks that version and points `latest` at the version. Last the run tags `v<version>` and
-creates the GitHub Release on the tag, with notes generated from the PRs merged since the previous
-release. A run that did not finish is run again with the same version. The same workflow releases
+The run sets that version on `@beaconsgg/admin-plugin` in its own checkout and runs the whole gate.
+The run then builds and publishes the package if the registry lacks that version and points
+`latest` at the version. Last the run tags `v<version>` and creates the GitHub Release on the tag,
+with notes generated from the PRs merged since the previous release. The run commits nothing, so
+the manifest on `main` names `0.0.0`. The tags and the GitHub Releases record what was released, and
+a new version has to be above the highest tag. A run that did not finish is run again with the same
+version. The same workflow releases
 Beacon's packages in [beacon.core](https://github.com/beacons-gg/beacon.core).
 
 The contract has a version of its own, with the rules in
