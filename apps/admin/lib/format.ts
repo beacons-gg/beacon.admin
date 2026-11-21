@@ -27,3 +27,13 @@ export function formatUptime(startedAt: string): string {
   const m = Math.floor((seconds % 3600) / 60);
   return d > 0 ? `${d}d ${h}h` : h > 0 ? `${h}h ${m}m` : `${m}m`;
 }
+
+/**
+ * The emoji of a profile's `avatar`, or `""`. An avatar names its scheme: `emoji:🦊`, or
+ * `image:<hash>@host` for an uploaded picture (beacon.core's `doc/spec/identity.md` §6). Only the
+ * emoji is drawn as text, so an image avatar or an unknown scheme shows no avatar rather than its
+ * raw value.
+ */
+export function avatarEmoji(avatar: string | undefined): string {
+  return avatar?.startsWith("emoji:") ? avatar.slice("emoji:".length) : "";
+}

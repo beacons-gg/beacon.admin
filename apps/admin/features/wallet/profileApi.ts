@@ -17,14 +17,11 @@ import {
 } from "@beaconsgg/identity";
 import type { ProfileDoc } from "@beaconsgg/protocol-types";
 import { client, describeApiError, describeRefusal } from "@/lib/api";
+import { avatarEmoji } from "@/lib/format";
 
 /** The editor's prefill: the doc's public face as the two fields the dialog edits. */
 export function publicFaceOf(doc: ProfileDoc | null): { displayName: string; avatarEmoji: string } {
-  const avatar = doc?.avatar ?? "";
-  return {
-    displayName: doc?.displayName ?? "",
-    avatarEmoji: avatar.startsWith("emoji:") ? avatar.slice("emoji:".length) : "",
-  };
+  return { displayName: doc?.displayName ?? "", avatarEmoji: avatarEmoji(doc?.avatar) };
 }
 
 /** The fleet's best current face for `did` — the dialog's whole prefill in one call. */
