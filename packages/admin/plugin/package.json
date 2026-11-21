@@ -1,6 +1,6 @@
 {
   "name": "@beaconsgg/admin-plugin",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "The operator console's plugin contract: what a game's operator screens are (GamePlugin) and what the console hands them (AdminHost). A game depends on this, never on the console.",
   "license": "Apache-2.0",
   "repository": {
