@@ -26,7 +26,7 @@ an issue you reported.
 ## Make a change
 
 1. Create a branch off `main`.
-2. Set up the workspace as the README's [Working here](README.md#working-here) section describes.
+2. Set up the workspace as the README's [Development](README.md#development) section describes.
    You need Node 22 (run `nvm use`) and pnpm 10.33.
 3. Make the change with tests that cover the change.
 4. Run `pnpm run gate` until the gate passes. CI runs the same script.
