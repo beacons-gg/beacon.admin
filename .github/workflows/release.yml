@@ -196,11 +196,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # The Dockerfile mounts an npm user config as a build secret. Public npm needs no token and
-      # the image installs no plugin, so the file is empty.
-      - name: An empty npm config for the build secret
-        run: touch "$RUNNER_TEMP/npmrc"
-
       - id: meta
         uses: docker/metadata-action@v6
         with:
@@ -216,7 +211,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          secret-files: npmrc=${{ runner.temp }}/npmrc
           # The public image carries no game plugin.
           build-args: CONSOLE_PLUGINS=
           cache-from: type=gha,scope=beacon-admin

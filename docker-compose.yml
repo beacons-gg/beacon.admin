@@ -2,8 +2,9 @@
 #
 #   docker compose up --build
 #
-# The build mounts your npm user config (~/.npmrc) as a build secret that never lands in a layer.
-# Public npm needs no token in it. Point BEACON_NPMRC at another file to use one. The container takes
+# The build needs no npm config: every package, a plugin from public npm included, comes from the
+# public registry. A plugin from another registry needs that registry's config, so build that image
+# with `docker build --secret` (apps/admin/README.md, "Game plugins"). The container takes
 # no configuration: pair it with a server by putting your wallet's DID in that server's
 # BEACON_ADMINS and http://localhost:3100 (or *) in its BEACON_CORS_ORIGINS (README, "Deploying
 # the console"). To run a released image instead of building, replace `build` with
@@ -17,13 +18,7 @@ services:
       # CONSOLE_PLUGINS="@example/beacon-admin-plugin" docker compose up --build
       args:
         CONSOLE_PLUGINS: ${CONSOLE_PLUGINS:-}
-      secrets:
-        - npmrc
     image: beacon-admin:local
     ports:
       - "3100:3100"
     restart: unless-stopped
-
-secrets:
-  npmrc:
-    file: ${BEACON_NPMRC:-${HOME}/.npmrc}
