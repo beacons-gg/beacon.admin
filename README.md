@@ -5,6 +5,16 @@ Beacon is a network of servers for games played at real places. The console runs
 walk through each screen. [Beacon Hosting](https://beacons.gg/hosting) runs a server for you, and
 [beacons.gg/docs](https://beacons.gg/docs) covers the rest of Beacon.
 
+![The Explore map: rooms from three games and a moving scout around San Francisco, listed beside the map](doc/screenshots/explore.png)
+
+The **Explore** map shows the rooms, scouts and places of every server the console holds. The
+**Members** screen lists who asked to join a server and who may write there. **Settings** changes a
+server's configuration in one signed write. The screenshots show a demo server with made-up players.
+
+| Members                                                                      | Settings                                                                  |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| ![Requests to join and the members of a server](doc/screenshots/members.png) | ![A server's settings, two of them changed](doc/screenshots/settings.png) |
+
 The web console an operator runs Beacon servers from, and the contract a game's operator screens
 plug into it with. Two packages:
 
