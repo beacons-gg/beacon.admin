@@ -2,7 +2,9 @@
 
 Beacon Admin is the operator console for managing Beacon servers. The console provides a single interface for viewing server activity, managing members, configuring settings, and working with the places and rooms stored across your servers.
 
-The console runs at [console.beacons.gg](https://console.beacons.gg). See the [operator console guide](https://beacons.gg/docs/operator-console) for an overview of its screens. [beacons.gg](https://beacons.gg) explains how Beacon works.
+The console is game-agnostic by default. However, game developers can provide expanded functionality through plugins built against `@beaconsgg/admin-plugin`. See the [plugin contract README](packages/admin/plugin/README.md) for details and an example.
+
+A base console is hosted at [console.beacons.gg](https://console.beacons.gg). See the [operator console guide](https://beacons.gg/docs/operator-console) for an overview of its screens. [beacons.gg](https://beacons.gg) explains how Beacon works.
 
 ![The Explore map: rooms from three games and a moving scout around San Francisco](doc/screenshots/explore.png)
 
@@ -20,10 +22,6 @@ This repository contains the operator console and the contract used by games to 
 | ------------------------- | --------------------------------------------------------------------------------------- |
 | `@beaconsgg/admin`        | The Next.js operator console. Runs in the browser and manages multiple Beacon servers.  |
 | `@beaconsgg/admin-plugin` | The published plugin contract for adding game-specific operator screens to the console. |
-
-The console is game-agnostic. The console doesn't contain any game-specific screens by default. Games provide those screens through plugins built against `@beaconsgg/admin-plugin`.
-
-See the [plugin contract README](packages/admin/plugin/README.md) for details and an example. The contract follows semantic versioning. [`CHANGELOG.md`](CHANGELOG.md) says what a plugin has to change for each major release.
 
 ## How it works
 
